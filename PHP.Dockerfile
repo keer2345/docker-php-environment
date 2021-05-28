@@ -1,4 +1,4 @@
 FROM php:fpm
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql mcrypt mbstring
 RUN pecl install xdebug && docker-php-ext-enable xdebug
