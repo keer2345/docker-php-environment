@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    image: nginx
+    container_name: kr-php-nginx
+    ports:
+      - 9001:80
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./app:/app
+  php:
+    # image: php:fpm
+    build:
+      context: .
+      dockerfile: PHP.Dockerfile
+    container_name: kr-php-fpm
+    volumes:
+      - ./app:/app
+  mysql:
+    # image: mariadb:latest
+    image: mysql:8.0.15
+    container_name: kr-php-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_DATABASE: kr-php-mysql
+    volumes:
+      - ./data/mysql/:/var/lib/mysql
+    ports:
+      - 33061:3306
